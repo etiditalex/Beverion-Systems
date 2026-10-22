@@ -1,9 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HeroSlider } from "@/components/HeroSlider";
-import { IconArrow } from "@/components/Icons";
+import { IconArrow, IconCheck, IconLayers, IconSearch, IconShield, IconSpark } from "@/components/Icons";
 import { CtaBand, SectionIntro } from "@/components/Sections";
+import { TransformSection } from "@/components/TransformSection";
 import { faqs, posts, products, reasons, services, showcases, steps } from "@/lib/content";
+
+const serviceIcons = {
+  seo: IconSearch,
+  aeo: IconSpark,
+  geo: IconSpark,
+  "web-design-development": IconLayers,
+  "ticketing-voting": IconCheck,
+  integration: IconLayers,
+  "it-support-consulting": IconShield,
+  "data-analysis": IconSearch,
+} as const;
 
 const ribbon = [
   "SEO",
@@ -52,34 +64,63 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-black/8 bg-mist">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-          <SectionIntro
-            eyebrow="Services"
-            title="Eight ways we take on the work."
-            text="Search, sites, platforms, integration, support, and analysis. Open any practice to see what is included."
-            href="/services"
-            action="All services"
+      <section className="bg-white px-4 py-6 sm:px-6">
+        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[32px] bg-[#12181b] px-5 py-12 sm:px-10 sm:py-14">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-6 -top-8 h-56 w-72 opacity-70"
+            style={{
+              backgroundImage: "radial-gradient(rgba(79, 213, 116, 0.55) 1.1px, transparent 1.2px)",
+              backgroundSize: "14px 14px",
+              maskImage: "radial-gradient(circle at 70% 30%, #000 20%, transparent 72%)",
+            }}
           />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {services.map((service) => (
-              <Link
-                key={service.slug}
-                href={`/services/${service.slug}`}
-                className="group flex h-full flex-col rounded-2xl border border-black/8 bg-white shadow-[0_8px_24px_rgba(16,24,28,0.04)] p-5 transition hover:border-accent/60"
-              >
-                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[#178a3e]">{service.short}</span>
-                <h3 className="mt-3 text-xl font-semibold text-heading">{service.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-6 text-copy">{service.summary}</p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-heading">
-                  Learn more
-                  <IconArrow className="h-4 w-4 transition group-hover:translate-x-0.5" />
-                </span>
+          <div className="relative flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <h2 className="max-w-xl text-3xl font-bold tracking-[-0.03em] text-white md:text-4xl">
+              Eight ways we take on the work.
+            </h2>
+            <p className="max-w-md text-sm leading-6 text-white/60">
+              Search, sites, platforms, integration, support, and analysis. Open any practice to see what is included.
+            </p>
+          </div>
+          <div className="relative mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {services.map((service) => {
+              const Icon = serviceIcons[service.slug as keyof typeof serviceIcons] ?? IconLayers;
+              return (
+                <Link
+                  key={service.slug}
+                  href={`/services/${service.slug}`}
+                  className="group flex h-full flex-col rounded-2xl border border-white/8 bg-[#1c262a] p-5 transition hover:border-accent/50"
+                >
+                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-navy">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-4 text-lg font-semibold text-white">{service.title}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-white/60">{service.summary}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent">
+                    Learn more
+                    <IconArrow className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+          <div className="relative mt-5 flex flex-col items-start justify-between gap-4 rounded-2xl bg-[#0d1416] px-5 py-4 sm:flex-row sm:items-center">
+            <p className="text-sm text-white/70">Each practice is scoped on its own and delivered by the same team.</p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/services" className="inline-flex h-11 items-center gap-2 rounded-xl bg-accent px-4 text-sm font-semibold text-navy hover:bg-[#3ebe68]">
+                All services
+                <IconArrow className="h-4 w-4" />
               </Link>
-            ))}
+              <Link href="/contact" className="inline-flex h-11 items-center rounded-xl border border-white/15 px-4 text-sm font-semibold text-white hover:bg-white/5">
+                Start a project
+              </Link>
+            </div>
           </div>
         </div>
       </section>
+
+      <TransformSection />
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <SectionIntro
