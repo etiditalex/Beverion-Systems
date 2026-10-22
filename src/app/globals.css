@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #242427;
+  --muted: #9aaba4;
+  --accent: #4fd574;
+  --line: rgba(168, 214, 186, 0.16);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: #f4f7f5;
+  --color-muted: #9aaba4;
+  --color-heading: #242427;
+  --color-copy: #5c676c;
+  --color-paper: #ffffff;
+  --color-mist: #f6f7f8;
+  --color-navy: #0e1a1d;
+  --color-navy-2: #122022;
+  --color-panel: #162628;
+  --color-accent: #4fd574;
+  --color-accent-2: #8ee8ae;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #ffffff;
+}
+
+body {
+  background: #ffffff;
+  color: #242427;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: #4fd574;
+  color: #0f1a1c;
+}
+
+.hero-glow {
+  background:
+    radial-gradient(820px 420px at 12% 20%, rgba(79, 213, 116, 0.16), transparent 62%),
+    radial-gradient(640px 380px at 88% 8%, rgba(79, 213, 116, 0.07), transparent 58%),
+    #0e1a1d;
+}
+
+.dot-field {
+  background-image: radial-gradient(rgba(79, 213, 116, 0.9) 1.25px, transparent 1.35px);
+  background-size: 12px 12px;
+}
+
+.rise {
+  animation: rise 0.55s ease;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes loadbar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.slide-progress {
+  animation: loadbar 7s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .rise,
+  .slide-progress,
+  .marquee-track {
+    animation: none;
+  }
+}
+
+.marquee-track {
+  animation: marquee 36s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
